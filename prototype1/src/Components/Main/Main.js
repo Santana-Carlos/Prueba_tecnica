@@ -53,9 +53,7 @@ class Main extends Component {
 
   splitWords = () => {
     //normalize text, removing puntuation, line breaks and lower casing the whole string
-    let temp_text = this.state.ori_text
-      .toLowerCase()
-      .replace(/[.,#!$%&;:{}=`~()]/g, " ");
+    let temp_text = this.state.ori_text.toLowerCase().replace(/[.,]/g, " ");
 
     let temp_words = temp_text.split(" ").filter((x) => x !== ""); //split string into words (array)
 
