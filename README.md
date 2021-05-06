@@ -2,7 +2,10 @@ Prueba_tecnica (Front-End con React.js)
 
 Aplicativo web de prueba, consumiendo la API "bacon ipsum", desplegando un texto autogenerado y realizando el calculo de las 3 palabras más frecuentes en el texto adquirido, desplegando dichos resultados a travez de un gráfico de barras.
 
-<!> Al ser una aplicación React, es necesario tener instalado Node.js en el equipo para poder ejecutarla (lo puedes encontrar aquí: https://nodejs.org/en/ es preferible descargar la versión LTS) <!>
+<!> IMPORTANTE <!>
+- Al ser una aplicación React, es necesario tener instalado Node.js en el equipo para poder ejecutarla (lo puedes encontrar aquí: https://nodejs.org/en/ es preferible descargar la versión LTS).
+- Una vez descargado el proyecto, navega hasta el directorio "prototype1" del proyecto desde una terminal (ej. CMD de windows).
+- Ejecuta el comando "npm install" para instalar todas las dependecias/librerias que requiere el proyecto.
 
 Para correr el aplicativo (versión de desarrollo, sin optimizar):
 - Navega hasta el directorio "prototype1" del proyecto desde una terminal (ej. CMD de windows).
