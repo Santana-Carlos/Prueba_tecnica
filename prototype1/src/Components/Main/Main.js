@@ -28,12 +28,7 @@ class Main extends Component {
     this.state = {
       ori_text: "",
       top_words: [],
-      temp_top: [
-        {
-          id: "control_value",
-          count: 0,
-        },
-      ],
+      all_words: [],
       set_words: "",
       set_chars: "",
       set_parags: 1,
@@ -81,47 +76,49 @@ class Main extends Component {
   };
 
   splitWords = () => {
+    let temp_oritext = this.state.ori_text || "";
     //normalize text, removing puntuation, line breaks and lower casing the whole string
-    let temp_oritext = this.state.ori_text;
     let temp_text = temp_oritext.toLowerCase().replace(/[.,]|\n/g, " ");
-
-    let temp_words = temp_text.split(" ").filter((x) => x !== ""); //split string into words (array)
+    //split string into words (array) and sort them (same words end up together)
+    let temp_words = temp_text
+      .split(" ")
+      .filter((x) => x !== "")
+      .sort();
 
     //counting parags words and chars
-    this.setState({
-      set_words: temp_words.length,
-      set_chars: temp_oritext.length,
-    });
-
-    for (let i = 0; i < temp_words.length; i++) {
-      if (this.state.temp_top.findIndex((x) => x.id === temp_words[i]) > -1)
-        continue;
-      let temp_count = temp_text.split(" " + temp_words[i] + " ").length - 1;
-      this.setState({
-        temp_top: this.state.temp_top.push({
-          id: temp_words[i],
-          count: temp_count,
-        }),
-      });
-    }
     this.setState(
       {
-        top_words: this.state.temp_top.sort((a, b) =>
-          a.count > b.count ? -1 : a.count < b.count ? 1 : 0
-        ),
+        all_words: temp_words,
+        set_words: temp_words.length,
+        set_chars: temp_oritext.length,
       },
-      this.resetWords
+      this.countWords
     );
   };
 
-  resetWords = () => {
+  countWords = () => {
+    let i = -1;
+    let current_word = "control_value";
+    let temp_top = [];
+
+    this.state.all_words.forEach((obj) => {
+      console.log(obj);
+      if (current_word === obj) {
+        temp_top[i].count++;
+      } else {
+        current_word = obj;
+        temp_top.push({
+          id: obj,
+          count: 1,
+        });
+        i++;
+      }
+    });
+
     this.setState({
-      temp_top: [
-        {
-          id: "control_value",
-          count: 0,
-        },
-      ],
+      top_words: temp_top.sort((a, b) =>
+        a.count > b.count ? -1 : a.count < b.count ? 1 : 0
+      ),
     });
   };
 
@@ -132,7 +129,7 @@ class Main extends Component {
 
     switch (name) {
       case "input_set_parags":
-        this.setState({ set_parags: value });
+        this.setState({ set_parags: value < 1 ? 1 : value });
         break;
       case "input_set_lorem":
         this.setState({ set_lorem: check });

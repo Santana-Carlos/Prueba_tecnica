@@ -37,7 +37,7 @@ export const StyledTextField = withStyles((theme) => ({
   root: {
     margin: "0 0 0 0.5rem",
     padding: 0,
-    maxWidth: "3.5rem",
+    maxWidth: "4rem",
     textAlign: "right",
     backgroundColor: "#fff",
     "& .MuiOutlinedInput-root": {
