@@ -46,13 +46,6 @@ class Main extends Component {
   }
 
   callApi = () => {
-    console.log(
-      process.env.REACT_APP_API_URL +
-        "?type=meat-and-filler&paras=" +
-        this.state.set_parags +
-        (this.state.set_lorem ? "&start-with-lorem=1" : "") +
-        "&format=json"
-    );
     fetch(
       process.env.REACT_APP_API_URL +
         "?type=meat-and-filler&paras=" +
@@ -67,7 +60,6 @@ class Main extends Component {
         return response.json();
       })
       .then((data) => {
-        //console.log(data);
         let temp_text = " ";
         if (data[0] !== undefined)
           for (let i = 0; i < data.length; i++)
@@ -107,7 +99,6 @@ class Main extends Component {
     let temp_top = [];
 
     this.state.all_words.forEach((obj) => {
-      console.log(obj);
       if (current_word === obj) {
         temp_top[i].count++;
       } else {
