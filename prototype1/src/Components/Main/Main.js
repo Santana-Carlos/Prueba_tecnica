@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { FormControlLabel, SvgIcon } from "@material-ui/core";
+import {
+  FormControlLabel,
+  SvgIcon,
+  Fade,
+  CircularProgress,
+} from "@material-ui/core";
 import { ReactComponent as IconChili } from "../../Assets/chili.svg";
 import {
   StyledContainer,
@@ -18,7 +23,6 @@ import {
   Label,
   Margin,
   Grid,
-  LoadingIndicator,
 } from "devextreme-react/chart";
 import "./Main.css";
 
@@ -33,6 +37,7 @@ class Main extends Component {
       set_chars: "",
       set_parags: 1,
       set_lorem: false,
+      loading: true,
     };
   }
 
@@ -119,6 +124,7 @@ class Main extends Component {
       top_words: temp_top.sort((a, b) =>
         a.count > b.count ? -1 : a.count < b.count ? 1 : 0
       ),
+      loading: false,
     });
   };
 
@@ -148,7 +154,7 @@ class Main extends Component {
     return (
       <StyledContainer maxWidth="md">
         {/* Title */}
-        <div className="o-title">
+        <div className="o-title o-row">
           {"Let's get spicy"}
           <SvgIcon
             viewBox="0 0 520 520"
@@ -161,6 +167,23 @@ class Main extends Component {
               transform: "rotate(-20deg)",
             }}
           />
+          <Fade
+            in={this.state.loading}
+            style={{
+              transitionDelay: "100ms",
+              margin: "0.5rem 0 0 auto ",
+            }}
+            unmountOnExit
+          >
+            <div style={{ fontSize: "1.5rem" }}>
+              {"Loading... "}
+              <CircularProgress
+                style={{ color: "#ff5f58" }}
+                size={"1.5rem"}
+                thickness={6}
+              />
+            </div>
+          </Fade>
         </div>
         <div className="o-normaltext">{"Bacon Ipsum Generator"}</div>
 
@@ -182,10 +205,6 @@ class Main extends Component {
           </div>
 
           <Chart className="o-chart" dataSource={data}>
-            <LoadingIndicator
-              enabled={true}
-              font={{ color: "#6f6f6f", size: 25 }}
-            />
             <Series
               valueField="count"
               argumentField="id"
@@ -235,9 +254,7 @@ class Main extends Component {
             />
             <div className="o-orangebutton">
               <OrangeButton
-                onClick={() => {
-                  this.callApi();
-                }}
+                onClick={() => this.setState({ loading: true }, this.callApi)}
               >
                 {"GENERATE!"}
               </OrangeButton>
